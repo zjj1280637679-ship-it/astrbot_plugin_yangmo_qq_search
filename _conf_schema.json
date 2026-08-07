@@ -1,0 +1,74 @@
+{
+  "socket_path": {
+    "description": "可选：NapCat 原生增强 Socket",
+    "type": "string",
+    "default": "",
+    "hint": "推荐先留空：AstrBot 已连接的 OneBot 足以完成基础搜索。只有你已单独部署兼容增强 Socket 时再填写。"
+  },
+  "database_filename": {
+    "description": "本地索引文件名",
+    "type": "string",
+    "default": "qq_search.sqlite3",
+    "hint": "只允许文件名；数据库固定放在 AstrBot 的插件数据目录，不写电脑 C 盘。"
+  },
+  "account_id": {
+    "description": "QQ 机器人账号兜底值",
+    "type": "string",
+    "default": "",
+    "hint": "通常留空，由当前 QQ 事件自动识别。后台刷新启动前没有事件时可填写机器人 QQ 号。"
+  },
+  "page_size": {
+    "description": "历史回填单页消息数",
+    "type": "int",
+    "default": 30,
+    "hint": "范围 5-100。大群读取慢时应降低，不应靠增加超时掩盖。"
+  },
+  "max_sync_pages_per_call": {
+    "description": "单次同步最大页数",
+    "type": "int",
+    "default": 10,
+    "hint": "限制单次工具调用的 QQ 读取成本；再次调用会从上次游标继续。"
+  },
+  "default_result_limit": {
+    "description": "默认搜索结果数",
+    "type": "int",
+    "default": 20,
+    "hint": "范围 1-20。结果是证据，不会自动进入热上下文。"
+  },
+  "default_member_result_limit": {
+    "description": "成员历史默认每页条数",
+    "type": "int",
+    "default": 30,
+    "hint": "范围 1-100。使用 QQ 原生群成员过滤，与关键词搜索结果数相互独立。"
+  },
+  "excerpt_chars": {
+    "description": "单条证据最大字符数",
+    "type": "int",
+    "default": 280,
+    "hint": "完整邻近语境用 qq_open_message 按需打开；只影响工具展示长度，不改写索引正文。"
+  },
+  "redact_output_secrets": {
+    "description": "工具输出中遮罩疑似秘钥",
+    "type": "bool",
+    "default": false,
+    "hint": "仅是输出边界的可选投影；检索、存储、分页、去重和引用始终使用原始数据。"
+  },
+  "reconcile_enabled": {
+    "description": "启用后台轻量对账",
+    "type": "bool",
+    "default": true,
+    "hint": "定期补最近一页并消费撤回事件，不执行深历史回填。"
+  },
+  "reconcile_interval_seconds": {
+    "description": "后台对账间隔（秒）",
+    "type": "int",
+    "default": 300,
+    "hint": "范围 60-3600。"
+  },
+  "reconcile_active_groups": {
+    "description": "每轮最多刷新活跃群数",
+    "type": "int",
+    "default": 8,
+    "hint": "只刷新七天内见过消息的群，避免遍历全部群。"
+  }
+}
