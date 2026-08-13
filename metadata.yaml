@@ -4,7 +4,7 @@ desc: "让你的 AI 把 QQ 群聊历史当作可引用的外部事实源：支�
 short_desc: "让 AI 按需搜索、引用和打开 QQ 群聊历史。"
 version: "0.3.0"
 astrbot_version: ">=4.26.1,<4.27"
-author: zjj1280637679-ship-it
+author: "羊膜大人"
 repo: "https://github.com/zjj1280637679-ship-it/astrbot_plugin_yangmo_qq_search"
 support_platforms:
   - aiocqhttp
