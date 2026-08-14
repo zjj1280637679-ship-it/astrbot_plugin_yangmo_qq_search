@@ -18,7 +18,7 @@ from .source import EventOneBotSource, QQSourceError, UnixJsonRpcClient
 from .store import QQSearchStore
 
 PLUGIN_NAME = "astrbot_plugin_yangmo_qq_search"
-VERSION = "0.3.0"
+VERSION = "0.3.1"
 
 
 def _bounded_int(

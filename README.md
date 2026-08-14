@@ -49,7 +49,7 @@ instruction_weight = 0
 ## 安装
 
 1. 在 AstrBot 插件管理中使用仓库 URL 安装，或上传精简 ZIP。
-2. 确认 AstrBot 版本满足 `>=4.26.1,<4.27`，平台为 `aiocqhttp`。
+2. 确认 AstrBot 版本满足 `>=4.26.1`（不设版本上限），平台为 `aiocqhttp`。
 3. 保持 `socket_path` 为空即可使用实时索引和本地关键词搜索；较早历史回填取决于所连接的 OneBot 后端是否实现 `get_group_msg_history`。
 4. 如你已经单独部署兼容的 NapCat 原生增强 Socket，可再填写路径；基础功能不依赖它。
 5. 保存配置并重载插件，然后用 `/群聊检索 状态` 核对覆盖范围。
