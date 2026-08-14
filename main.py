@@ -18,7 +18,7 @@ from .source import EventOneBotSource, QQSourceError, UnixJsonRpcClient
 from .store import QQSearchStore
 
 PLUGIN_NAME = "astrbot_plugin_yangmo_qq_search"
-VERSION = "0.3.1"
+VERSION = "0.3.2"
 
 
 def _bounded_int(
@@ -156,14 +156,26 @@ class YangmoQQSearch(Star):
         logger.error("[yangmo.qq_search] operation failed", exc_info=True)
         return "检索未完成：本地索引发生异常，已留日志。"
 
+    @filter.event_message_type(filter.EventMessageType.ALL, priority=1000)
+    async def bind_onebot_session(self, event: AstrMessageEvent):
+        """Bind the live OneBot transport as early as possible on every QQ event.
+
+        Session discovery must not depend on whether the event is a group message
+        that can be indexed. Private messages and events later stopped by another
+        plugin are still sufficient to provide AstrBot's aiocqhttp bot handle.
+        """
+        self._ensure_background_task()
+        self._account_id(event)
+
     @filter.event_message_type(filter.EventMessageType.ALL, priority=-100)
     async def ingest_group_message(self, event: AstrMessageEvent):
         """Index every received group message without changing the chat pipeline."""
         self._ensure_background_task()
         try:
+            account_id = self._account_id(event)
             record = event_to_record(event)
             if record is not None:
-                self.service.ingest_live(self._account_id(event), record)
+                self.service.ingest_live(account_id, record)
         except Exception:
             logger.error("[yangmo.qq_search] live ingest failed", exc_info=True)
 
@@ -444,6 +456,10 @@ class YangmoQQSearch(Star):
                 await asyncio.sleep(self.reconcile_interval)
                 account_id = self._last_account_id or self.store.latest_account()
                 if not account_id:
+                    continue
+                # No live OneBot transport has been observed yet. This is a normal
+                # startup/not-ready state, not a reconcile error worth logging.
+                if getattr(self.source, "_bot", None) is None and self.source.bridge is None:
                     continue
                 await self._reconcile_once(account_id)
             except asyncio.CancelledError:
