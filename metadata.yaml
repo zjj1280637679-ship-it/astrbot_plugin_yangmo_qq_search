@@ -2,7 +2,7 @@ name: astrbot_plugin_yangmo_qq_search
 display_name: "QQ 聊天记录搜索器"
 desc: "让你的 AI 把 QQ 群聊历史当作可引用的外部事实源：支持关键词、成员、时间、消息类型和邻近语境检索，不把整段历史自动塞进主对话。"
 short_desc: "让 AI 按需搜索、引用和打开 QQ 群聊历史。"
-version: "0.3.1"
+version: "0.3.2"
 astrbot_version: ">=4.26.1"
 author: "羊膜大人"
 repo: "https://github.com/zjj1280637679-ship-it/astrbot_plugin_yangmo_qq_search"
